@@ -1,0 +1,10 @@
+{
+  "ask-human-for-context-local": {
+    "command": "python",
+    "args": ["server.py", "--transport", "stdio"],
+    "cwd": "/Users/galperetz/custom-mcp-servers/mcp-server-python-template",
+    "env": {
+      "PYTHONPATH": "/Users/galperetz/custom-mcp-servers/mcp-server-python-template"
+    }
+  }
+}
