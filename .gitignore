@@ -8,3 +8,4 @@ wheels/
 scratchpad/
 # Virtual environments
 .venv
+.history/

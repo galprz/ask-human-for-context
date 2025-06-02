@@ -9,7 +9,7 @@ description = "Ask Human for Context MCP Server - GUI dialogs for AI assistant i
 authors = [{name = "Gal Peretz", email = "gal@example.com"}]
 license = {text = "MIT"}
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 keywords = ["mcp", "ask-human-for-context", "gui", "dialog", "cursor", "ai-assistant"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -28,6 +28,8 @@ classifiers = [
 
 dependencies = [
     "mcp",
+    "starlette",
+    "uvicorn",
 ]
 
 [project.optional-dependencies]
