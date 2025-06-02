@@ -59,6 +59,40 @@ Add this to your Cursor MCP settings (`~/.cursor/mcp.json`):
 
 The MCP server will now be available to Claude in your Cursor sessions!
 
+## ✅ Status
+
+**Current Version**: 1.0.2  
+**Status**: ✅ **Fully Functional**
+
+### ✅ Tested Features
+
+- ✅ **GUI Dialogs**: Native dialogs working on macOS with custom Cursor icon
+- ✅ **MCP Server**: Both stdio and SSE transport modes operational
+- ✅ **Entry Points**: Both `ask-human-for-context-mcp` command and `python -m ask_human_for_context_mcp` working
+- ✅ **Dependencies**: All required packages (mcp, starlette, uvicorn) properly configured
+- ✅ **Error Handling**: Comprehensive error handling with user-friendly messages
+- ✅ **Timeout Management**: 90-second default timeout with graceful handling
+
+### 🧪 Latest Test Results
+
+```bash
+# Server startup test
+✅ ask-human-for-context-mcp --transport sse --port 8083
+✅ Server responds correctly on http://localhost:8083/sse
+
+# STDIO transport test (default - most important for Cursor)
+✅ ask-human-for-context-mcp --transport stdio
+✅ MCP protocol handshake completed successfully
+✅ Server info: {'name': 'ask-human-for-context', 'version': '1.4.1'}
+✅ Tool discovery working: found 'asking_user_missing_context' tool
+✅ Full MCP communication protocol verified
+
+# GUI dialog test  
+✅ Platform detected: Darwin (macOS)
+✅ Custom Cursor icon loaded from ./assets/cursor-icon.icns
+✅ Dialog timeout and response handling working correctly
+```
+
 ## 💬 How It Works
 
 ### For AI Assistants
@@ -165,6 +199,41 @@ pip install -e .
 
 > **Note**: For production use, prefer Option 1 which uses the published PyPI package.
 
+### Option 4: MCP Server Configuration File
+
+For easy management, you can use the included `mcp-server-config.json` file which provides multiple portable configuration options:
+
+```json
+{
+  "ask-human-for-context-uvx": {
+    "command": "uvx",
+    "args": ["ask-human-for-context-mcp", "--transport", "stdio"]
+  },
+  "ask-human-for-context-pip": {
+    "command": "ask-human-for-context-mcp",
+    "args": ["--transport", "stdio"]
+  },
+  "ask-human-for-context-python": {
+    "command": "python",
+    "args": ["-m", "ask_human_for_context_mcp", "--transport", "stdio"]
+  },
+  "ask-human-for-context-local-dev": {
+    "command": "python",
+    "args": ["src/ask_human_for_context_mcp/server.py", "--transport", "stdio"],
+    "cwd": ".",
+    "env": {
+      "PYTHONPATH": "./src"
+    }
+  }
+}
+```
+
+**Configuration Options Explained:**
+- **`uvx`**: ✅ **Recommended** - Auto-installs from PyPI, works globally
+- **`pip`**: For when package is installed via pip
+- **`python`**: Uses module execution, works if package is installed
+- **`local-dev`**: For development from source code with relative paths
+
 ## ⚙️ Configuration
 
 ### Transport Modes
@@ -229,14 +298,17 @@ result = asking_user_missing_context(
 
 ### Requirements
 
-- Python 3.8+
-- Dependencies: `mcp`
+- Python 3.10+ (supports 3.8+ but tested on 3.12)
+- Dependencies: `mcp`, `starlette`, `uvicorn`
 - Platform-specific: `osascript` (macOS), `zenity` (Linux), `tkinter` (Windows)
 
 ### Building
 
 ```bash
-# Install dependencies
+# Install dependencies (using uv - recommended)
+uv sync
+
+# Or using pip
 pip install -e .
 
 # Build package

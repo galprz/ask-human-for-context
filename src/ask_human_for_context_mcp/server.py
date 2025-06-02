@@ -76,7 +76,7 @@ class GUIDialogHandler:
         import os
         
         # Use absolute path to the icon file - more reliable than path calculation
-        cursor_icon_path = "/Users/galperetz/custom-mcp-servers/mcp-server-python-template/assets/cursor-icon.icns"
+        cursor_icon_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "assets", "cursor-icon.icns")
         
         if os.path.exists(cursor_icon_path):
             icon_clause = f'with icon file (POSIX file "{cursor_icon_path}")'
@@ -179,7 +179,7 @@ class GUIDialogHandler:
         
         # Check for the specific Cursor Logo files (prioritize ICNS for macOS)
         custom_logo_paths = [
-            "./assets/cursor-icon.icns",  # Try ICNS first (native macOS format)
+            os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "assets", "cursor-icon.icns"),  # Try ICNS first (native macOS format)
             "./cursor-icon.icns",
             "./assets/Cursor Logo (4).png",
             "./Cursor Logo (4).png"
